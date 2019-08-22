@@ -23,7 +23,8 @@ public class HTML2PDF {
 
     /**
      * The output folder path, default to "Download/HTML2PDF"
-     *PDFResultListener
+     * PDFResultListener
+     *
      * @param outputFolder The output file path
      */
     public void setOutputFolder(File outputFolder) {
@@ -103,7 +104,7 @@ public class HTML2PDF {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                    Log.i(TAG, "page finished loading " + url);
+                Log.i(TAG, "page finished loading " + url);
                 mOutputFileName = mWebView.getTitle() + "_" + System.currentTimeMillis() + ".pdf";
                 createWebPrintJob();
             }
@@ -112,8 +113,9 @@ public class HTML2PDF {
 
     /**
      * Convert from a URL link
-     * @param context the context
-     * @param url the link
+     *
+     * @param context  the context
+     * @param url      the link
      * @param listener the listener
      */
     public static void fromUrl(Context context, String url, HTMLTOPDFListener listener) {
@@ -124,9 +126,10 @@ public class HTML2PDF {
 
     /**
      * Convert from a URL link
-     * @param context the context
-     * @param url the link
-     * @param folder the destination folder
+     *
+     * @param context  the context
+     * @param url      the link
+     * @param folder   the destination folder
      * @param listener the listener
      */
     public static void fromUrl(@NonNull Context context, @NonNull String url, @NonNull File folder, @Nullable HTMLTOPDFListener listener) {
@@ -139,10 +142,10 @@ public class HTML2PDF {
     /**
      * Convert from HTML document
      *
-     * @param context the context
-     * @param baseUrl the base URL
+     * @param context      the context
+     * @param baseUrl      the base URL
      * @param htmlDocument the HTML string
-     * @param listener the listener
+     * @param listener     the listener
      */
     public static void fromHTMLDocument(@NonNull Context context, @Nullable String baseUrl, @NonNull String htmlDocument, @Nullable HTMLTOPDFListener listener) {
         HTML2PDF html2PDF = new HTML2PDF(context);
@@ -153,7 +156,7 @@ public class HTML2PDF {
     /**
      * Convert from content in a WebView
      *
-     * @param webView the WebView
+     * @param webView  the WebView
      * @param listener the listener
      */
     public static void fromWebView(@NonNull WebView webView, @Nullable HTMLTOPDFListener listener) {
@@ -168,7 +171,7 @@ public class HTML2PDF {
      * @param url the URL link
      */
     public void fromUrl(String url) {
-        Log.e("fromUrl","fromUrl");
+        Log.e("fromUrl", "fromUrl");
         mWebView.loadUrl(url);
         doHtml2Pdf();
     }
@@ -176,7 +179,7 @@ public class HTML2PDF {
     /**
      * Convert from HTML document
      *
-     * @param baseUrl the base URL
+     * @param baseUrl      the base URL
      * @param htmlDocument the HTML string
      */
     public void fromHTMLDocument(String baseUrl, String htmlDocument) {
@@ -197,7 +200,7 @@ public class HTML2PDF {
         pdfPrint.setPdfPrintListener(new PdfPrint.PdfPrintListener() {
             @Override
             public void onWriteFinished(String output) {
-                    Log.i(TAG, "done creating pdf at: " + output);
+                Log.i(TAG, "done creating pdf at: " + output);
                 if (mListener != null) {
                     mListener.onConversionFinished(output);
                 }

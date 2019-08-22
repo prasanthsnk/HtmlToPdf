@@ -8,31 +8,31 @@ import android.util.Log;
 
 import java.io.File;
 
-public class PdfPrint
-{
+public class PdfPrint {
     public interface PdfPrintListener {
         void onWriteFinished(String output);
+
         void onError();
     }
 
-        private final PrintAttributes printAttributes;
+    private final PrintAttributes printAttributes;
 
-        private PdfPrintListener mListener;
+    private PdfPrintListener mListener;
 
-        public void setPdfPrintListener(PdfPrintListener listener) {
+    public void setPdfPrintListener(PdfPrintListener listener) {
         mListener = listener;
     }
 
-        public PdfPrint(PrintAttributes printAttributes) {
+    public PdfPrint(PrintAttributes printAttributes) {
         this.printAttributes = printAttributes;
     }
 
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-        public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName) {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void print(final PrintDocumentAdapter printAdapter, final File path, final String fileName) {
         printAdapter.onLayout(null, printAttributes, null, new PrintDocumentAdapter.LayoutResultCallback() {
             @Override
             public void onLayoutFinished(PrintDocumentInfo info, boolean changed) {
-                Log.e("Finish", "onLayoutFinished" );
+                Log.e("Finish", "onLayoutFinished");
                 ParcelFileDescriptor fileDescriptor = getOutputFile(path, fileName);
                 if (null == fileDescriptor) {
                     if (mListener != null) {
@@ -43,7 +43,7 @@ public class PdfPrint
                 printAdapter.onWrite(new PageRange[]{PageRange.ALL_PAGES}, fileDescriptor, new CancellationSignal(), new PrintDocumentAdapter.WriteResultCallback() {
                     @Override
                     public void onWriteFinished(PageRange[] pages) {
-                        Log.e("Finish", "onWriteFinished" );
+                        Log.e("Finish", "onWriteFinished");
                         super.onWriteFinished(pages);
                         if (mListener != null) {
                             mListener.onWriteFinished((new File(path, fileName)).getAbsolutePath());
@@ -54,7 +54,7 @@ public class PdfPrint
         }, null);
     }
 
-        private ParcelFileDescriptor getOutputFile(File path, String fileName) {
+    private ParcelFileDescriptor getOutputFile(File path, String fileName) {
         boolean success = true;
         if (!path.exists()) {
             success = path.mkdirs();
